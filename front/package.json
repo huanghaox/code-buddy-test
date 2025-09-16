@@ -1,0 +1,32 @@
+{
+  "name": "front",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "less:compile": "lessc src/style.less src/style.css",
+    "less:watch": "lessc --watch src/style.less src/style.css",
+    "build:with-less": "npm run less:compile && npm run build"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "element-plus": "^2.11.2",
+    "less": "^4.4.1",
+    "pinia": "^3.0.3",
+    "vue": "^3.5.18",
+    "vue-meta": "^2.4.0",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.4.0",
+    "@vitejs/plugin-legacy": "^7.2.1",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.7.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.2",
+    "vue-tsc": "^3.0.5"
+  }
+}
