@@ -40,7 +40,7 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import gsap from 'gsap';
 import Observer from 'gsap/Observer';
-import { PanelInfo, Fact } from './PanelTypes';
+import type { PanelInfo, Fact } from './PanelTypes';
 import PanelSlider from './PanelSlider.vue';
 import Panel from './Panel.vue';
 import HomePanel from './HomePanel.vue';
@@ -77,15 +77,19 @@ const allPanels = [homePanel, ...panels];
 const currentIndex = ref(0);
 const isAnimating = ref(false);
 const LOCK_MS = 400;
-const sliderRef = ref(null);
+interface PanelSliderInstance {
+  slideTo: (index: number) => void;
+}
+
+const sliderRef = ref<PanelSliderInstance | null>(null);
 
 // 根据id查找对应的panel索引
-function findPanelIndexById(id) {
+function findPanelIndexById(id: string): number {
   return allPanels.findIndex(panel => panel.id === id);
 }
 
 // 根据索引获取panel的id
-function getPanelIdByIndex(index) {
+function getPanelIdByIndex(index: number): string | null {
   if (index >= 0 && index < allPanels.length) {
     return allPanels[index].id;
   }
@@ -93,7 +97,7 @@ function getPanelIdByIndex(index) {
 }
 
 // 创建一个自定义事件，用于通知导航栏当前活动的section
-function notifyActiveSectionChange(sectionId) {
+function notifyActiveSectionChange(sectionId: string): void {
   // 更新全局currentSectionId变量
   window.currentSectionId = sectionId;
 
@@ -105,7 +109,7 @@ function notifyActiveSectionChange(sectionId) {
 }
 
 // 滚动到指定索引的panel
-function goTo(index) {
+function goTo(index: number): void {
   if (isAnimating.value) return;
   
   const targetIndex = Math.max(0, Math.min(index, allPanels.length - 1));
@@ -129,7 +133,7 @@ function onAnimationComplete() {
 }
 
 // 根据锚点ID滚动到对应的panel
-function goToById(id) {
+function goToById(id: string): void {
   const index = findPanelIndexById(id);
   if (index !== -1) {
     goTo(index);
@@ -145,8 +149,8 @@ function handleHashChange() {
 }
 
 // 暴露方法给全局，以便NavigationBar可以调用
-function exposeScrollMethod() {
-  window.scrollToSection = (sectionId) => {
+function exposeScrollMethod(): void {
+  window.scrollToSection = (sectionId: string): boolean => {
     goToById(sectionId);
     return false; // 阻止默认行为
   };
@@ -169,11 +173,12 @@ onMounted(() => {
   }
 
   // 监听滚轮/触摸
-  const observer = Observer.create({
+  Observer.create({
     target: window,
     type: "wheel,touch,pointer",
     tolerance: 10,
     preventDefault: true,
+    // @ts-ignore - GSAP Observer类型定义不完整
     passive: false,
     onDown: () => goTo(currentIndex.value + 1),
     onUp: () => goTo(currentIndex.value - 1),
