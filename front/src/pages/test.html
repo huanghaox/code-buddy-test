@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GSAP ScrollTrigger 横向滚动 Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* 容器 */
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 400vw; /* 4个页面宽度 */
+    }
+
+    /* 每一屏 */
+    .panel {
+      flex: 0 0 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 4rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .panel:nth-child(1) { background: #3498db; }
+    .panel:nth-child(2) { background: #e74c3c; }
+    .panel:nth-child(3) { background: #2ecc71; }
+    .panel:nth-child(4) { background: #9b59b6; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <section class="panel">1</section>
+    <section class="panel">2</section>
+    <section class="panel">3</section>
+    <section class="panel">4</section>
+  </div>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    let sections = gsap.utils.toArray(".panel");
+
+    gsap.to(sections, {
+      xPercent: -100 * (sections.length - 1), // 横向位移
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".container",
+        pin: true,        // 固定容器
+        scrub: 1,         // 平滑滚动
+        snap: 1 / (sections.length - 1), // 吸附到整屏
+        end: () => "+=" + (document.querySelector(".container")?.offsetWidth || 0)
+      }
+    });
+  </script>
+</body>
+</html>

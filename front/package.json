@@ -12,8 +12,10 @@
     "build:with-less": "npm run less:compile && npm run build"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
     "axios": "^1.12.2",
     "element-plus": "^2.11.2",
+    "gsap": "^3.13.0",
     "less": "^4.4.1",
     "pinia": "^3.0.3",
     "vue": "^3.5.18",

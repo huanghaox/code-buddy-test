@@ -10,6 +10,19 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strong, summary, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -51,9 +64,10 @@ button:focus-visible {
   padding: 2em;
 }
 #app {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  /* padding: 2rem; */
   text-align: center;
 }
 @media (prefers-color-scheme: light) {
@@ -67,4 +81,5 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+
 }
