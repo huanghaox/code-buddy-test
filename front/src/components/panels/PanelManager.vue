@@ -25,6 +25,15 @@
           @next="goTo(i + 1)"
         />
         
+        <ServicesPanel 
+          v-else-if="panel.id === 'services'" 
+          subtitle="我们提供"
+          title="服务"
+          :showNextButton="i < allPanels.length - 1"
+          @next="goTo(i + 1)"
+        />
+
+
         <GenericPanel 
           v-else 
           :title="panel.text"
@@ -45,6 +54,7 @@ import PanelSlider from './PanelSlider.vue';
 import Panel from './Panel.vue';
 import HomePanel from './HomePanel.vue';
 import AboutPanel from './AboutPanel.vue';
+import ServicesPanel from './ServicesPanel.vue';
 import GenericPanel from './GenericPanel.vue';
 
 gsap.registerPlugin(Observer);

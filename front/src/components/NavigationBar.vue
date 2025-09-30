@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import NavItem from './NavItem.vue'
 
 // 为全局scrollToSection方法声明类型
@@ -99,12 +99,13 @@ const monitorCurrentSectionId = () => {
 // 监听自定义section-change事件
 const setupSectionChangeListener = () => {
   // 创建事件监听器
-  sectionChangeListener = ((event: CustomEvent) => {
-    const { sectionId } = event.detail
+  sectionChangeListener = (event) => {
+    const customEvent = event as CustomEvent<{ sectionId: string }>
+    const { sectionId } = customEvent.detail
     if (sectionId && activeSection.value !== sectionId) {
       activeSection.value = sectionId
     }
-  }) as EventListener
+  }
   
   // 添加事件监听器
   window.addEventListener('section-change', sectionChangeListener)
@@ -174,13 +175,15 @@ const initTouchEvents = () => {
   let touchEndX = 0
   
   // 添加触摸开始事件
-  navMenu.addEventListener('touchstart', (e: TouchEvent) => {
-    touchStartX = e.changedTouches[0].screenX
+  navMenu.addEventListener('touchstart', (e) => {
+    const event = e as TouchEvent
+    touchStartX = event.changedTouches[0].screenX
   }, { passive: true })
   
   // 添加触摸结束事件
-  navMenu.addEventListener('touchend', (e: TouchEvent) => {
-    touchEndX = e.changedTouches[0].screenX
+  navMenu.addEventListener('touchend', (e) => {
+    const event = e as TouchEvent
+    touchEndX = event.changedTouches[0].screenX
     
     // 向左滑动关闭菜单
     if (touchEndX < touchStartX - 50 && isMenuOpen.value) {

@@ -82,7 +82,7 @@ defineEmits<{
   font-family: ProximaNova b;
   font-size: 7.2rem;
   line-height: 1.1;
-  width: 10rem;
+  /* width: 10rem; */
 }
 
 .main_title_wrapper:not(:last-child) {
